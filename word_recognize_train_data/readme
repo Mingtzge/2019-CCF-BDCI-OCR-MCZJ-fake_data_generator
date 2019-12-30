@@ -1,0 +1,38 @@
+本部分功能:
+此部分的主要是生成数据用于文字识别模型训练.
+数据分为两部分:
+
+大规模数据:145万
+制作方法:首先伪造了145000条身份证信息label,再将这些信息打印在原始身份证上,这样就有了145000张彩色身份证图片
+再将随机水印打在这些身份证上,再随机更改对比度,亮度,模糊度,透明度,输出成灰度图,则图片基本与官方的图片差不多了
+再将去水印,切割图片的步骤在走一边,这个用跑测试集的区别在于,需要把每个元素的label按照一定的格式在元素图片名
+联系起来,这样切割出来的数据就有图片和对应的label,这样就可以用来训练了.
+
+小规模finetune数据:18万
+与上一步步骤基本一样,只不过源数据不是我们自己造的,而是官方给的初赛和复赛的训练集
+
+文件介绍:
+fake_origin_fuyinwuxiao:伪造打有"复印无效"字样的身份证
+执行步骤:见该文件夹下的readme
+fake_origin_jinzhifuyin:伪造打有"禁止复印"字样的身份证
+执行步骤:见该文件夹下的readme
+fix_img_address_unit.py:工具文件,切割地址和签发机关
+preprocess_for_test.py:工具文件,预处理
+split_img_generate_data.py:工具文件,切割官方的训练集数据
+split_img_generate_data_origin_data.py:工具文件,切割伪造的身份证图片
+
+执行文件
+main_process_train_data.py:生成官方提供的训练集的训练数据
+执行方法:python main_process_train_data.py --no_test_data
+最终数据地址:./small_data_for_crnn_finetune/test_data_preprocessed
+
+main_process_origin_data.py:生成自己伪造的身份证的训练数据
+执行方法:python main_process_origin_data.py --no_test_data
+最终数据地址:./large_data_for_crnn/test_data_preprocessed
+
+注:本部分代码,主体跟工程目录下的watermask_remover_and_split_data中的代码一致,只是根据应用场景有小范围改动,
+所以这里面的注释不是很详细.
+生成数据的时间可能会比较漫长 ~~~ 如果条件允许,可以改为多进程实现,在本地我们都是30个核同时跑,但是比赛服务器核比较少
+实现多进程遇到过问题,所以全部改为了单进程.
+比赛过程代码改动次数较多,没有留意保留每一份代码,代码重现有些地方全凭回忆.整理任务较重,没有过多时间一一
+复现核实,复现过程可能与描述有一定出入,如有问题,还麻烦联系我们,感谢

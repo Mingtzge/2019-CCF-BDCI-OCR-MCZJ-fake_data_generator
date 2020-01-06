@@ -96,7 +96,7 @@ def gen_data(origin_img_path, image_name, img_father, father_cor):
 
 def m_run(name):
     print(name)
-    img_path = os.path.join(ori_img_path, name)
+    img_path = os.path.join(choose_img_path, name)
     father_cor, img_father = match_img(img_path, roi_img_path, tp_threshold)
     if father_cor is False:
         print(name)
@@ -107,7 +107,8 @@ def m_run(name):
     else:
         name = name[:-5] + "0" + name[-4:]
     img_path = os.path.join(ori_img_path, name)
-    gen_data(img_path, name, img_father, father_cor)
+    if os.path.exists(img_path): 
+        gen_data(img_path, name, img_father, father_cor)
 
 
 ###

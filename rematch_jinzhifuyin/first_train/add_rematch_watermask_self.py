@@ -218,4 +218,4 @@ if __name__ == "__main__":
     # pool.map(gen_run, ori_img_names)
     # pool.close()
     # pool.join()
-    print("%d images failed" % n)
+    # print("%d images failed" % n)

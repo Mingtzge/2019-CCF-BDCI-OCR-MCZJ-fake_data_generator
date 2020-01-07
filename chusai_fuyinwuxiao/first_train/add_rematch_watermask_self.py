@@ -130,5 +130,4 @@ if __name__ == "__main__":
     test_thr = 0.1 # 各个数据集的比例
     ori_img_names = os.listdir(choose_img_path)
     for img in ori_img_names:
-        gen_run(ori_img_names)
-    print("%d images failed" % n)
+        gen_run(img)

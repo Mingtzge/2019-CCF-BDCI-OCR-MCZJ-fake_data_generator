@@ -7,8 +7,8 @@ import os
 
 # 伪造正面
 def gen_card_front(img, str):
-    font1 = os.path.join(ori_path, r'src\black.TTF')
-    font2 = os.path.join(ori_path, r'src\msyh.ttc')
+    font1 = 'black.TTF'
+    font2 = 'msyh.ttc'
     color_blue = (0, 191, 255)
     color_black = (0, 0, 0)
 
@@ -64,7 +64,7 @@ def gen_card_front(img, str):
 
 # 伪造背面
 def gen_card_back(img, str):
-    font1 = os.path.join(ori_path, r'src\black.TTF')
+    font1 = 'black.TTF'
 
     color_black = (0, 0, 0)
     img_res = img_put_text(img, '签发机关', 108, 202, font1, color_black, 15)
@@ -185,20 +185,22 @@ def gen_faker_card_run():
 
         img_new_white1 = img_to_white(image1)  # 生成画布
         img_res_f = gen_card_front(img_new_white1, result_front)  # 写入文字
-        cv2.imwrite(result_card_path + '\{}_1.jpg'.format(cnt), img_res_f)
+        cv2.imwrite(result_card_path + '/{}_1.jpg'.format(cnt), img_res_f)
 
         img_new_white2 = img_to_white(image2)
         img_res_b = gen_card_back(img_new_white2, result_back)
-        cv2.imwrite(result_card_path + '\{}_0.jpg'.format(cnt), img_res_b)
+        cv2.imwrite(result_card_path + '/{}_0.jpg'.format(cnt), img_res_b)
         cnt = cnt + 1
         print(cnt)
 
 
 if __name__ == "__main__":
-    ori_path = os.path.abspath('.')
-    front_img = os.path.join(ori_path, r'src\front.png')  # 正面模板
-    back_img = os.path.join(ori_path, r'src\back.png')  # 背面模板
+    ori_path = os.path.abspath('./')
+    front_img = os.path.join(ori_path, r'src/front.png')  # 正面模板
+    back_img = os.path.join(ori_path, r'src/back.png')  # 背面模板
     result_card_path = os.path.join(ori_path, r'fake_real_color_data')  # 伪造原始身份证样本结果路径
+    if not os.path.exists(result_card_path):
+        os.makedirs(result_card_path)
     csv_files = ["Train_Labels.csv", "Train_Labels2.csv"]
     for csv_file in csv_files:
         ori_csv_file = os.path.join(ori_path, r'src', csv_file)  # 原始数据
